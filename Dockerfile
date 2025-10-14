@@ -1,4 +1,6 @@
-FROM ubuntu:20.04
+# syntax=docker/dockerfile:1.6
+ARG TARGETPLATFORM
+FROM --platform=linux/amd64 ubuntu:20.04
 
 SHELL ["/bin/bash", "-c"]
 
