@@ -102,14 +102,24 @@ gcc -shared -o tetlib.so tetgen.o predicates.o
 make -j4
 
 
+# To test installation of the BAT dependencies
 announce "Installing BAT"
+# to prevent libtool version confusion, use the system's libtool
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH   # take precedence over conda/bin
+unset ACLOCAL_PATH                                 # clear conda macro path
 mkdir ${target_dir}/bat && cd $_
 git clone https://github.com/bat/bat.git -b ${bat_version}
 mkdir bat-install
 cd bat
 ./autogen.sh
+# Clean any possibly existing build files
+git clean -fdx || true
+mkdir -p m4
+# Recreate autotools chain with system (libtool 2.4.6)
+libtoolize --force --copy
+autoreconf -fis
 source ${target_dir}/root/bin/thisroot.sh # BAT installer needs to find ROOT
-./configure --prefix=${target_dir}/bat/bat-install/
+./configure --prefix=${target_dir}/bat/bat-install/ --disable-static
 make -j4
 make install
 
