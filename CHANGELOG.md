@@ -12,6 +12,8 @@ Now docker image can be generated properly by github actions for new api changes
 
 **Also look**: [Changelog](https://github.com/mucahit-kaya/GeMSE_environment/blob/master/CHANGELOG.md)
 
+### Docker image
+- `meowfold/gemse_env:v1.0.1` (linux/amd64)
 
 ## [v1.0.0] – 2025-12-17
 ### Overview
