@@ -103,13 +103,18 @@ make -j4
 
 
 announce "Installing BAT"
+# to prevent libtool version confusion, use the system's libtool
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 mkdir ${target_dir}/bat && cd $_
 git clone https://github.com/bat/bat.git -b ${bat_version}
 mkdir bat-install
 cd bat
 ./autogen.sh
+# Recreate autotools chain with system (libtool 2.4.6)
+libtoolize --force --copy
+autoreconf -fis
 source ${target_dir}/root/bin/thisroot.sh # BAT installer needs to find ROOT
-./configure --prefix=${target_dir}/bat/bat-install/
+./configure --prefix=${target_dir}/bat/bat-install/  --disable-static
 make -j4
 make install
 
