@@ -33,19 +33,21 @@ jobs:
       id: meta
       run: |
         IMAGE="${{ secrets.DOCKER_HUB_USERNAME }}/gemse_env"
-        SHA="${GITHUB_SHA::7}"
-        TAGS="${IMAGE}:${SHA}"
+        TAGS=""
         if [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
-           TAGS="${TAGS},${IMAGE}:dev"
+          TAGS="${IMAGE}:dev"
         fi
-        if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
-          TAGS="${TAGS},${IMAGE}:latest"
+
+        if [[ "${GITHUB_REF}" == "refs/heads/main" || "${GITHUB_REF}" == "refs/heads/master" ]]; then
+          TAGS="${IMAGE}:latest"
         fi
+        
         if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
           VER="${GITHUB_REF#refs/tags/}"
-          TAGS="${TAGS},${IMAGE}:${VER},${IMAGE}:latest"
+          TAGS="${IMAGE}:${VER},${IMAGE}:latest"
         fi
-        echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+
+        echo "tags=${TAGS}" >> "$GITHUB_OUTPUT"
 
 
     -
