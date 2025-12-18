@@ -29,6 +29,7 @@ All subsequent releases will build on top of this version.
 
 ### Docker image
 - `meowfold/gemse_env:v1.0.0` (linux/amd64)
+- alternatively, original repo: `ramirezdiego/gemse_env:latest`
 
 ### Git reference
 - Tag: `v1.0.0`
